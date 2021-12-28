@@ -1,32 +1,34 @@
+-- The Lux Empire OG
 Config = {}
 Config.UsingTarget = false -- If you are using qb-target (uses entity zones to target vehicles)
 Config.Commission = 0.10 -- Percent that goes to sales person from a full car sale 10%
-Config.FinanceCommission = 0.05 -- Percent that goes to sales person from a finance sale 5%
-Config.FinanceZone = vector3(-29.53, -1103.67, 26.42) -- Where the finance menu is located
-Config.PaymentWarning = 10 -- time in minutes that player has to make payment before repo
+Config.FinanceCommission = 2.25 -- Percent that goes to sales person from a finance sale 5%
+Config.FinanceZone = vector3(-27.3, -1104.26, 27.27) -- Where the finance menu is located
+Config.FinanceZone = vector3(-28.31, -1106.88, 27.27) -- Where the finance menu is located
+Config.PaymentWarning = 15 -- time in minutes that player has to make payment before repo
 Config.PaymentInterval = 24 -- time in hours between payment being due
 Config.MinimumDown = 10 -- minimum percentage allowed down
 Config.MaximumPayments = 24 -- maximum payments allowed
 Config.Shops = {
-    ['pdm'] = {
+    ['luxury'] = {
         ['Type'] = 'free-use',  -- no player interaction is required to purchase a car
         ['Zone'] = {
             ['Shape'] = { --polygon that surrounds the shop
-                vector2(-56.727394104004, -1086.2325439453),
-                vector2(-60.612808227539, -1096.7795410156),
-                vector2(-58.26834487915, -1100.572265625),
-                vector2(-35.927803039551, -1109.0034179688),
-                vector2(-34.427627563477, -1108.5111083984),
-                vector2(-32.02657699585, -1101.5877685547),
-                vector2(-33.342102050781, -1101.0377197266),
-                vector2(-31.292987823486, -1095.3717041016)
+            vector2(-56.727394104004, -1086.2325439453),
+            vector2(-60.612808227539, -1096.7795410156),
+            vector2(-58.26834487915, -1100.572265625),
+            vector2(-35.927803039551, -1109.0034179688),
+            vector2(-34.427627563477, -1108.5111083984),
+            vector2(-32.02657699585, -1101.5877685547),
+            vector2(-33.342102050781, -1101.0377197266),
+            vector2(-31.292987823486, -1095.3717041016)
             },
             ['minZ'] = 25.0,  -- min height of the shop zone
             ['maxZ'] = 28.0  -- max height of the shop zone
         },
         ['Job'] = 'none', -- Name of job or none
-        ['ShopLabel'] = 'Premium Deluxe Motorsport', -- Blip name
-        ['showBlip'] = true,  --- true or false
+        ['ShopLabel'] = 'The Lux Empire - Dealership', -- Blip name
+        ['showBlip'] = false,  --- true or false
         ['Categories'] = { -- Categories available to browse
             ['sportsclassics'] = 'Sports Classics',
             ['sedans'] = 'Sedans',
@@ -36,103 +38,39 @@ Config.Shops = {
             ['muscle'] = 'Muscle',
             ['compacts'] = 'Compacts',
             ['motorcycles'] = 'Motorcycles',
-            ['vans'] = 'Vans'
+            ['vans'] = 'Vans',
+            ['Imports'] = 'Imports'
         },
-        ['TestDriveTimeLimit'] = 0.5, -- Time in minutes until the vehicle gets deleted
+        ['TestDriveTimeLimit'] = 1.5, -- Time in minutes until the vehicle gets deleted
         ['Location'] = vector3(-45.67, -1098.34, 26.42), -- Blip Location
         ['ReturnLocation'] = vector3(-44.74, -1082.58, 26.68), -- Location to return vehicle, only enables if the vehicleshop has a job owned
         ['VehicleSpawn'] = vector4(-56.79, -1109.85, 26.43, 71.5), -- Spawn location when vehicle is bought
         ['ShowroomVehicles'] = {
             [1] = {
-                coords = vector4(-45.65, -1093.66, 25.44, 69.5), -- where the vehicle will spawn on display
-                defaultVehicle = 'adder', -- Default display vehicle
-                chosenVehicle = 'adder', -- Same as default but is dynamically changed when swapping vehicles
+                coords = vector4(-42.18, -1101.11, 26.30, 156.09), -- where the vehicle will spawn on display   (for the ground height use y 26.1)
+                defaultVehicle = '911gt3r', -- Default display vehicle
+                chosenVehicle = '911gt3r', -- Same as default but is dynamically changed when swapping vehicles
             },
             [2] = {
-                coords = vector4(-48.27, -1101.86, 25.44, 294.5),
-                defaultVehicle = 'schafter2',
-                chosenVehicle = 'schafter2',
+                coords = vector4(-37.15, -1093.06, 26.28, 2.75),
+                defaultVehicle = 'rmod240sx',
+                chosenVehicle = 'rmod240sx',
             },
             [3] = {
-                coords = vector4(-39.6, -1096.01, 25.44, 66.5),
-                defaultVehicle = 'comet2',
-                chosenVehicle = 'comet2',
+                coords = vector4(-47.76, -1092.06, 26.29, 119.65),
+                defaultVehicle = 'rmodsuprapandem',
+                chosenVehicle = 'rmodsuprapandem',
             },
             [4] = {
-                coords = vector4(-51.21, -1096.77, 25.44, 254.5),
-                defaultVehicle = 'vigero',
-                chosenVehicle = 'vigero',
+                coords = vector4(-54.78, -1096.82, 26.29, 13.34),
+                defaultVehicle = 'rmodg65',
+                chosenVehicle = 'rmodg65',
             },
             [5] = {
-                coords = vector4(-40.18, -1104.13, 25.44, 338.5),
-                defaultVehicle = 't20',
-                chosenVehicle = 't20',
+                coords = vector4(-49.84, -1083.82, 26.29, 64.55),
+                defaultVehicle = 'rmodcharger69',
+                chosenVehicle = 'rmodcharger69',
             },
-            [6] = {
-                coords = vector4(-43.31, -1099.02, 25.44, 52.5),
-                defaultVehicle = 'bati',
-                chosenVehicle = 'bati',
-            },
-            [7] = {
-                coords = vector4(-50.66, -1093.05, 25.44, 222.5),
-                defaultVehicle = 'bati',
-                chosenVehicle = 'bati',
-            },
-            [8] = {
-                coords = vector4(-44.28, -1102.47, 25.44, 298.5),
-                defaultVehicle = 'bati',
-                chosenVehicle = 'bati',
-            }
         },
     },
-    ['luxury'] = {
-        ['Type'] = 'managed',  -- meaning a real player has to sell the car
-        ['Zone'] = {
-            ['Shape'] = {
-                vector2(-81.724754333496, 72.436462402344),
-                vector2(-60.159938812256, 60.576206207275),
-                vector2(-55.763122558594, 61.749210357666),
-                vector2(-52.965869903564, 69.869110107422),
-                vector2(-50.352680206299, 75.886123657227),
-                vector2(-61.261016845703, 81.564918518066),
-                vector2(-63.812171936035, 75.633102416992),
-                vector2(-76.546226501465, 81.189826965332)
-            },
-            ['minZ'] = 69.0,
-            ['maxZ'] = 76.0
-        },
-        ['Job'] = 'cardealer', -- Name of job or none
-        ['ShopLabel'] = 'Luxury Vehicle Shop',
-        ['showBlip'] = true,  --- true or false
-        ['Categories'] = {
-            ['super'] = 'Super',
-            ['sports'] = 'Sports'
-        },
-        ['TestDriveTimeLimit'] = 0.5,
-        ['Location'] = vector3(-63.59, 68.25, 73.06),
-        ['ReturnLocation'] = vector3(-65.05, 81.23, 71.16),
-        ['VehicleSpawn'] = vector4(-71.13, 84.04, 71.09, 65.23),
-        ['ShowroomVehicles'] = {
-            [1] = {
-                coords = vector4(-75.96, 74.78, 70.90, 221.69),
-                defaultVehicle = 'italirsx',
-                chosenVehicle = 'italirsx',
-            },
-            [2] = {
-                coords = vector4(-66.52, 74.33, 70.65, 188.03),
-                defaultVehicle = 'italigtb',
-                chosenVehicle = 'italigtb',
-            },
-            [3] = {
-                coords = vector4(-71.83, 68.60, 70.75, 276.57),
-                defaultVehicle = 'nero',
-                chosenVehicle = 'nero',
-            },
-            [4] = {
-                coords = vector4(-59.95, 68.61, 70.85, 181.44),
-                defaultVehicle = 'comet2',
-                chosenVehicle = 'comet2',
-            }
-        }
-    } -- Add your next table under this comma
 }
