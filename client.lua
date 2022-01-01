@@ -1,4 +1,5 @@
 -- Variables
+----------
 local QBCore = exports['qb-core']:GetCoreObject()
 local PlayerData = QBCore.Functions.GetPlayerData() -- Just for resource restart (same as event handler)
 local insideZones = {}
@@ -220,48 +221,86 @@ function createFreeUseShop(shopShape, name)
             CreateThread(function()
                 while insideZones[name] do
                     setClosestShowroomVehicle()
-                    vehicleMenu = {
-                        {
-                            isMenuHeader = true,
-                            header = getVehBrand():upper().. ' '..getVehName():upper().. ' - $' ..getVehPrice(),
-                        },
-                        {
-                            header = 'Test Drive',
-                            txt = 'Test drive currently selected vehicle',
-                            params = {
-                                event = 'qb-vehicleshop:client:TestDrive',
-                            }
-                        },
-                        {
-                            header = "Buy Vehicle",
-                            txt = 'Purchase currently selected vehicle',
-                            params = {
-                                isServer = true,
-                                event = 'qb-vehicleshop:server:buyShowroomVehicle',
-                                args = {
-                                    buyVehicle = Config.Shops[ClosestShop]["ShowroomVehicles"][ClosestVehicle].chosenVehicle
+                    if PlayerData.job.name == 'pdmdealer' then
+                        vehicleMenu = {
+                            {
+                                isMenuHeader = true,
+                                header = getVehBrand():upper().. ' '..getVehName():upper().. ' - $' ..getVehPrice(),
+                            },
+                            {
+                                header = 'Test Drive',
+                                txt = 'Test drive currently selected vehicle',
+                                params = {
+                                    event = 'qb-vehicleshop:client:TestDrive',
                                 }
-                            }
-                        },
-                        {
-                            header = 'Finance Vehicle',
-                            txt = 'Finance currently selected vehicle',
-                            params = {
-                                event = 'qb-vehicleshop:client:openFinance',
-                                args = {
-                                    price = getVehPrice(),
-                                    buyVehicle = Config.Shops[ClosestShop]["ShowroomVehicles"][ClosestVehicle].chosenVehicle
+                            },
+                            {
+                                header = "Buy Vehicle",
+                                txt = 'Purchase currently selected vehicle',
+                                params = {
+                                    isServer = true,
+                                    event = 'qb-vehicleshop:server:buyShowroomVehicle',
+                                    args = {
+                                        buyVehicle = Config.Shops[ClosestShop]["ShowroomVehicles"][ClosestVehicle].chosenVehicle
+                                    }
                                 }
-                            }
-                        },
-                        {
-                            header = 'Swap Vehicle',
-                            txt = 'Change currently selected vehicle',
-                            params = {
-                                event = 'qb-vehicleshop:client:vehCategories',
-                            }
-                        },
-                    }
+                            },
+                            {
+                                header = 'Finance Vehicle',
+                                txt = 'Finance currently selected vehicle',
+                                params = {
+                                    event = 'qb-vehicleshop:client:openFinance',
+                                    args = {
+                                        price = getVehPrice(),
+                                        buyVehicle = Config.Shops[ClosestShop]["ShowroomVehicles"][ClosestVehicle].chosenVehicle
+                                    }
+                                }
+                            },
+                            {
+                                header = 'Swap Vehicle',
+                                txt = 'Change currently selected vehicle',
+                                params = {
+                                    event = 'qb-vehicleshop:client:vehCategories',
+                                }
+                            },
+                        }
+                    else
+                        vehicleMenu = {
+                            {
+                                isMenuHeader = true,
+                                header = getVehBrand():upper().. ' '..getVehName():upper().. ' - $' ..getVehPrice(),
+                            },
+                            {
+                                header = 'Test Drive',
+                                txt = 'Test drive currently selected vehicle',
+                                params = {
+                                    event = 'qb-vehicleshop:client:TestDrive',
+                                }
+                            },
+                            {
+                                header = "Buy Vehicle",
+                                txt = 'Purchase currently selected vehicle',
+                                params = {
+                                    isServer = true,
+                                    event = 'qb-vehicleshop:server:buyShowroomVehicle',
+                                    args = {
+                                        buyVehicle = Config.Shops[ClosestShop]["ShowroomVehicles"][ClosestVehicle].chosenVehicle
+                                    }
+                                }
+                            },
+                            {
+                                header = 'Finance Vehicle',
+                                txt = 'Finance currently selected vehicle',
+                                params = {
+                                    event = 'qb-vehicleshop:client:openFinance',
+                                    args = {
+                                        price = getVehPrice(),
+                                        buyVehicle = Config.Shops[ClosestShop]["ShowroomVehicles"][ClosestVehicle].chosenVehicle
+                                    }
+                                }
+                            },
+                        }
+                    end
                     Wait(1000)
                 end
             end)
@@ -285,7 +324,7 @@ function createManagedShop(shopShape, name, jobName)
             ClosestShop = name
             insideZones[name] = true
             CreateThread(function()
-                while insideZones[name] and PlayerData.job.name == Config.Shops[name]['Job'] do
+                while insideZones[name] and PlayerData.job ~= nil and PlayerData.job.name == Config.Shops[name]['Job'] do
                     setClosestShowroomVehicle()
                     vehicleMenu = {
                         {
@@ -368,7 +407,7 @@ RegisterNetEvent('qb-vehicleshop:client:TestDrive', function()
         local prevCoords = GetEntityCoords(PlayerPedId())
         QBCore.Functions.SpawnVehicle(Config.Shops[ClosestShop]["ShowroomVehicles"][ClosestVehicle].chosenVehicle, function(veh)
             TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
-            exports['LegacyFuel']:SetFuel(veh, 100)
+            exports['cc-fuel']:SetFuel(veh, 100)
             SetVehicleNumberPlateText(veh, 'TESTDRIVE')
             SetEntityAsMissionEntity(veh, true, true)
             SetEntityHeading(veh, Config.Shops[ClosestShop]["VehicleSpawn"].w)
@@ -399,7 +438,7 @@ RegisterNetEvent('qb-vehicleshop:client:customTestDrive', function(data)
         local vehicle = data.testVehicle
         local prevCoords = GetEntityCoords(PlayerPedId())
         QBCore.Functions.SpawnVehicle(vehicle, function(veh)
-            exports['LegacyFuel']:SetFuel(veh, 100)
+            exports['cc-fuel']:SetFuel(veh, 100)
             SetVehicleNumberPlateText(veh, 'TESTDRIVE')
             SetEntityAsMissionEntity(veh, true, true)
             SetEntityHeading(veh, Config.Shops[ClosestShop]["VehicleSpawn"].w)
@@ -568,7 +607,7 @@ end)
 RegisterNetEvent('qb-vehicleshop:client:buyShowroomVehicle', function(vehicle, plate)
     QBCore.Functions.SpawnVehicle(vehicle, function(veh)
         TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
-        exports['LegacyFuel']:SetFuel(veh, 100)
+        exports['cc-fuel']:SetFuel(veh, 100)
         SetVehicleNumberPlateText(veh, plate)
         SetEntityHeading(veh, Config.Shops[ClosestShop]["VehicleSpawn"].w)
         SetEntityAsMissionEntity(veh, true, true)
